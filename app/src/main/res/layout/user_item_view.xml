@@ -14,20 +14,20 @@
             android:id="@+id/imageView_user_picture"
             android:layout_width="@dimen/image_profile_size"
             android:layout_height="@dimen/image_profile_size"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textView_user_name"
-            style="@style/TextAppearance.Text.Large.Bold"
+            style="@style/TextAppearance.Text.Medium.Bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
             android:padding="@dimen/margin_medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/imageView_user_picture"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Carlos Acevedo" />
+            tools:text="Carlos Acevedo Carlos Acevedo" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textView_user_nationality"

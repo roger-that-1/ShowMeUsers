@@ -1,58 +1,50 @@
 package mx.com.acevedo.carlos.showmeusers.components.userlist.viewmodels
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import mx.com.acevedo.carlos.showmeusers.base.BaseViewModel
 import mx.com.acevedo.carlos.showmeusers.components.userlist.models.UserModel
+import mx.com.acevedo.carlos.showmeusers.components.userlist.repository.UserRepository
 import mx.com.acevedo.carlos.showmeusers.utils.toLiveData
 import javax.inject.Inject
 
 @HiltViewModel
-class UserListViewModel @Inject constructor() : ViewModel() {
+class UserListViewModel @Inject constructor(
+    private val userRepository: UserRepository
+) : BaseViewModel() {
 
-    // TODO Remove mock values
-    private val userModelList = MutableLiveData(
-        listOf(
-            UserModel(
-                "https://randomuser.me/api/portraits/med/men/22.jpg",
-                "Lorem Ipsum",
-                "Lorem Ipsum",
-                ""
-            ),
-            UserModel(
-                "https://randomuser.me/api/portraits/med/men/22.jpg",
-                "Lorem Ipsum",
-                "Lorem Ipsum",
-                ""
-            ),
-            UserModel(
-                "https://randomuser.me/api/portraits/med/men/22.jpg",
-                "Lorem Ipsum",
-                "Lorem Ipsum",
-                ""
-            ),
-            UserModel(
-                "https://randomuser.me/api/portraits/med/men/22.jpg",
-                "Lorem Ipsum",
-                "Lorem Ipsum",
-                ""
-            ),
-        )
-    )
+    private val userModelList = MutableLiveData<List<UserModel>>()
+    private val showSwipeLoading = MutableLiveData<Boolean>()
 
-    // TODO Remove async update
     init {
-        viewModelScope.launch {
-            delay(5000)
-            userModelList.value = listOf(UserModel("", "TEST", "TEST", ""))
-        }
+        getUserModelList()
     }
 
     /**
      * Provides Live data instance to View
      */
-    fun getUserModelList() = userModelList.toLiveData()
+    fun getUserModelListObserver() = userModelList.toLiveData()
+
+    /**
+     * Provides swipe to refresh loading visibility
+     */
+    fun showSwipeLoading() = showSwipeLoading.toLiveData()
+
+    /**
+     * Gets new user list from repository
+     */
+    fun updateUserList() = getUserModelList()
+
+    /**
+     * It gets an [UserModel] list from repository, this method should not
+     * know where the data came from
+     */
+    private fun getUserModelList() = disposable.add(
+        userRepository.getUserList()
+            .doOnSubscribe { showSwipeLoading.value = true }
+            .doFinally { showSwipeLoading.value = false }
+            .subscribe(userModelList::setValue) {
+                showError.value = it.localizedMessage
+            }
+    )
 }

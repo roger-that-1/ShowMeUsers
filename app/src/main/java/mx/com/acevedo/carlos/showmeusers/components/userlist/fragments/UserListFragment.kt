@@ -4,19 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
+import dagger.hilt.android.AndroidEntryPoint
 import mx.com.acevedo.carlos.showmeusers.components.userlist.models.UserModel
 import mx.com.acevedo.carlos.showmeusers.components.userlist.viewmodels.UserListViewModel
 import mx.com.acevedo.carlos.showmeusers.components.userlist.views.UserItemView
 import mx.com.acevedo.carlos.showmeusers.databinding.FragmentUserListBinding
 
+@AndroidEntryPoint
 class UserListFragment : Fragment() {
 
-    private val viewModel: UserListViewModel by viewModels()
+    private val viewModel by viewModels<UserListViewModel>()
 
     private val viewBinding by lazy {
         FragmentUserListBinding.inflate(layoutInflater)
@@ -42,7 +45,17 @@ class UserListFragment : Fragment() {
      * Binds user model list live data with the view
      */
     private fun bindViewModel() {
-        viewModel.getUserModelList().observe(viewLifecycleOwner, ::updateItemList)
+        viewModel.getUserModelListObserver().observe(viewLifecycleOwner, ::updateItemList)
+        viewModel.showError().observe(viewLifecycleOwner, ::showError)
+        viewModel.showSwipeLoading()
+            .observe(viewLifecycleOwner, viewBinding.swipeRefreshUserList::setRefreshing)
+    }
+
+    /**
+     * Shows error message to user
+     */
+    private fun showError(errorMessage: String) {
+        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
     }
 
     /**
@@ -56,10 +69,15 @@ class UserListFragment : Fragment() {
      * Setting up recycler view
      */
     private fun initRecyclerView() {
-        viewBinding.recyclerViewUserList.apply {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = itemsAdapter
+        with(viewBinding) {
+            recyclerViewUserList.apply {
+                setHasFixedSize(true)
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = itemsAdapter
+            }
+            swipeRefreshUserList.setOnRefreshListener {
+                viewModel.updateUserList()
+            }
         }
     }
 }
