@@ -1,19 +1,19 @@
 package mx.com.acevedo.carlos.showmeusers.components.userlist.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
-import mx.com.acevedo.carlos.showmeusers.R
-import mx.com.acevedo.carlos.showmeusers.components.userlist.viewmodels.UserListViewModel
+import mx.com.acevedo.carlos.showmeusers.databinding.ActivityUserListBinding
 
 @AndroidEntryPoint
 class UserListActivity : AppCompatActivity() {
 
-    private val viewModel: UserListViewModel by viewModels()
+    private val viewBinding by lazy {
+        ActivityUserListBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user_list)
+        setContentView(viewBinding.root)
     }
 }

@@ -1,0 +1,21 @@
+ext {
+
+    //Navigation
+    nav_version = "2.3.5"
+
+    //Groupie
+    groupie_version = "2.9.0"
+
+    //Glide
+    glide_version = "4.11.0"
+
+    //Retrofit
+    retrofit_version = "2.9.0"
+
+    //Hilt
+    hilt_version = "2.38.1"
+
+    //Gson
+    gson_version = "2.8.6"
+
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextAppearance.Text.Large.Bold" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CardView.CustomView" parent="Widget.MaterialComponents.CardView">
+        <item name="android:background">@color/white</item>
+        <item name="cardBackgroundColor">@color/orange_primary</item>
+        <item name="cardCornerRadius">@dimen/cardView_corner_radius</item>
+        <item name="cardElevation">@dimen/cardView_elevation</item>
+        <item name="cardUseCompatPadding">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+</resources>
