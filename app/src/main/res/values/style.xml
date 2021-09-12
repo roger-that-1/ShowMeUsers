@@ -6,6 +6,21 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="TextAppearance.Text.Medium.PrimaryColor.Bold" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/orange_primary</item>
+    </style>
+
+    <style name="TextAppearance.Text.Small.PrimaryColor" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textSize">@dimen/font_size_small</item>
+        <item name="android:textColor">@color/orange_primary</item>
+    </style>
+
+    <style name="TextAppearance.Text.Large.PrimaryColor.Bold" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/orange_primary</item>
+    </style>
+
     <style name="CardView.CustomView" parent="Widget.MaterialComponents.CardView">
         <item name="android:background">@color/white</item>
         <item name="cardBackgroundColor">@color/orange_primary</item>

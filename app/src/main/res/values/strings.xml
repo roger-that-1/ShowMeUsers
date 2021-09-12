@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">ShowMeUsers</string>
+    <string name="nationality_title">Nationality</string>
+    <string name="postcode_title">Postcode</string>
+    <string name="street_name_title">Street Name</string>
+    <string name="street_number_title">Street Number</string>
+    <string name="city_title">City</string>
+    <string name="state">State</string>
 </resources>

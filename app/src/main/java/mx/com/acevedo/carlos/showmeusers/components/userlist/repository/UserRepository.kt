@@ -8,7 +8,8 @@ import mx.com.acevedo.carlos.showmeusers.utils.applySchedulers
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
-    private val userServiceRepository: UserServiceRepository
+    private val userServiceRepository: UserServiceRepository,
+    private val userModelMapper: UserModelMapper
 ) {
     /**
      * Gets a single user from repository
@@ -16,14 +17,18 @@ class UserRepository @Inject constructor(
     private fun getUser() = userServiceRepository.getUser()
 
     /**
-     * Provides a 10 user list from repository, values received are mapper to [UserModel]
-     * finally mutable list is parsed to immutable list to prevent observer modifications
+     * Provides a [REPEAT_TIMES] users list from repository, values received are mapped to [UserModel],
+     * finally mutable list is parsed to immutable list to prevent modifications at observer
      */
     fun getUserList(): Single<List<UserModel>> =
         getUser()
-            .repeat(5)
-            .map { UserModelMapper.map(it) }
+            .repeat(REPEAT_TIMES.toLong())
+            .map { userModelMapper.map(it) }
             .toList()
             .map { it.toList() }
             .applySchedulers()
+
+    private companion object {
+        const val REPEAT_TIMES = 5
+    }
 }

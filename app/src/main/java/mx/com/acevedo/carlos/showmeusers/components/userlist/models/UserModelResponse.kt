@@ -26,11 +26,28 @@ data class UserModelResponse(
 
     data class Location(
         @SerializedName("country")
-        val country: String?
+        val country: String?,
+        @SerializedName("street")
+        val street: Street?,
+        @SerializedName("city")
+        val city: String?,
+        @SerializedName("state")
+        val state: String?,
+        @SerializedName("postcode")
+        val postCode: Any?
+    )
+
+    data class Street(
+        @SerializedName("number")
+        val number: Int?,
+        @SerializedName("name")
+        val name: String?
     )
 
     data class ProfilePicture(
         @SerializedName("medium")
-        val pictureMedium: String
+        val pictureMedium: String,
+        @SerializedName("large")
+        val pictureLarge: String
     )
 }
