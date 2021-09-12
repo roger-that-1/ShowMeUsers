@@ -6,6 +6,7 @@ import mx.com.acevedo.carlos.showmeusers.components.userlist.models.UserDbModel
 import mx.com.acevedo.carlos.showmeusers.components.userlist.models.UserModel
 import mx.com.acevedo.carlos.showmeusers.components.userlist.models.UserModelResponse
 import mx.com.acevedo.carlos.showmeusers.utils.ResourceProvider
+import mx.com.acevedo.carlos.showmeusers.utils.isNotNullOrBlank
 import javax.inject.Inject
 
 class UserModelMapper @Inject constructor(
@@ -34,7 +35,7 @@ class UserModelMapper @Inject constructor(
         }
 
         return UserModel(
-            name = "${userName?.title} ${userName?.first} ${userName?.last}",
+            name = concatName(userName),
             nationality = country,
             profilePictureSmall = smallProfilePicture,
             profilePictureLarge = largeProfilePicture,
@@ -112,5 +113,29 @@ class UserModelMapper @Inject constructor(
                     state = state
                 )
             }
+        }
+
+    /**
+     * Concatenates user full name with format
+     * @param userName [UserModelResponse.Name] object obtained from service API response
+     */
+    private fun concatName(userName: UserModelResponse.Name?): String {
+        return formatStringValue(
+            formatStringValue(userName?.title, userName?.first)
+                    + formatStringValue(userName?.first, userName?.last)
+                    + userName?.last.orEmpty()
+        )
+    }
+
+    /**
+     * Adds spaces if required or empty if value is null or blank
+     * @param firstValue First string value to be showed
+     * @param secondValue Second value placed next to [firstValue]
+     */
+    private fun formatStringValue(firstValue: String?, secondValue: String? = "") =
+        when {
+            firstValue.isNotNullOrBlank() && secondValue.isNotNullOrBlank() -> "$firstValue "
+            firstValue.isNotNullOrBlank() -> firstValue.orEmpty()
+            else -> ""
         }
 }

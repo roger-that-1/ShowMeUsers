@@ -1,5 +1,20 @@
 ext {
 
+    //Core dependencies
+    core_ktx_version = "1.6.0"
+    appcompat_version ="1.3.1"
+    material_version = "1.4.0"
+    constraint_layout_version = "2.1.0"
+    junit_version = "4.13.2"
+    core_testing_version = "2.1.0"
+    ext_junit_version = "1.1.3"
+    espresso_version = "3.4.0"
+
+    //UI dependencies
+    activity_version = "1.3.1"
+    fragment_version = "1.4.0-alpha08"
+    swiperefresh_version = "1.1.0"
+
     //Navigation
     nav_version = "2.3.5"
 
@@ -14,13 +29,20 @@ ext {
 
     //Hilt
     hilt_version = "2.38.1"
+    hilt_lifecycle_version = "1.0.0-alpha03"
+    hilt_compiler_version = "1.0.0"
 
     //Gson
     gson_version = "2.8.6"
 
     //RxJava
-    rxjava_version = "2.1.11"
+    rxjava_version = "2.2.11"
+    rxandroid_version ="2.1.1"
 
     //Room
     room_version = "2.3.0"
+
+    //Mockito
+    mockito_version = "3.5.11"
+    mockitokt_verion = "2.2.0"
 }
