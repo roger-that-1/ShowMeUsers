@@ -1,6 +1,6 @@
 package mx.com.acevedo.carlos.showmeusers.components.userlist.api
 
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Single
 import mx.com.acevedo.carlos.showmeusers.components.userlist.models.UserModelResponse
 import retrofit2.http.GET
 

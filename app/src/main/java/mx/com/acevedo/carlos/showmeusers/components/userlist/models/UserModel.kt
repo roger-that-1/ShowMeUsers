@@ -9,10 +9,10 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class UserModel(
-    val profilePictureLarge: String,
-    val profilePictureSmall: String,
     val name: String,
     val nationality: String,
+    val profilePictureLarge: String,
+    val profilePictureSmall: String,
     val postCode: String,
     val streetNumber: String,
     val streetName: String,

@@ -1,34 +1,38 @@
 package mx.com.acevedo.carlos.showmeusers.components.userlist.repository
 
-import io.reactivex.rxjava3.core.Single
 import mx.com.acevedo.carlos.showmeusers.components.userlist.api.UserServiceRepository
-import mx.com.acevedo.carlos.showmeusers.components.userlist.models.UserModel
-import mx.com.acevedo.carlos.showmeusers.components.userlist.utils.UserModelMapper
-import mx.com.acevedo.carlos.showmeusers.utils.applySchedulers
+import mx.com.acevedo.carlos.showmeusers.components.userlist.database.UserDbRepository
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
     private val userServiceRepository: UserServiceRepository,
-    private val userModelMapper: UserModelMapper
+    private val userDbRepository: UserDbRepository
 ) {
-    /**
-     * Gets a single user from repository
-     */
-    private fun getUser() = userServiceRepository.getUser()
 
     /**
-     * Provides a [REPEAT_TIMES] users list from repository, values received are mapped to [UserModel],
-     * finally mutable list is parsed to immutable list to prevent modifications at observer
+     * Gets users from database if database is not empty or fetch users from service when
+     * database is empty
      */
-    fun getUserList(): Single<List<UserModel>> =
-        getUser()
-            .repeat(REPEAT_TIMES.toLong())
-            .map { userModelMapper.map(it) }
-            .toList()
-            .map { it.toList() }
-            .applySchedulers()
+    fun getUserList() =
+        if (userDbRepository.isDbEmpty()) getUsersFromService() else getUsersFromDb()
 
-    private companion object {
-        const val REPEAT_TIMES = 5
-    }
+    /**
+     * Deletes database table and fetch new users from service
+     */
+    fun updateUserList() = userDbRepository.deleteTable().andThen(getUsersFromService())
+
+    /**
+     * Gets all users in database
+     */
+    private fun getUsersFromDb() = userDbRepository.getAll()
+
+    /**
+     * Fetch users from service and insert values to database
+     */
+    private fun getUsersFromService() =
+        userServiceRepository
+            .getUserModelList()
+            .doOnSuccess {
+                userDbRepository.insertAll(it).subscribe()
+            }
 }

@@ -31,9 +31,16 @@ class UserListViewModel @Inject constructor(
     fun showSwipeLoading() = showSwipeLoading.toLiveData()
 
     /**
-     * Gets new user list from repository
+     * Gets new [UserModel] list from repository
      */
-    fun updateUserList() = getUserModelList()
+    fun updateUserList() = disposable.add(
+        userRepository.updateUserList()
+            .doOnSubscribe { showSwipeLoading.value = true }
+            .doFinally { showSwipeLoading.value = false }
+            .subscribe(userModelList::setValue) {
+                showError.value = it.localizedMessage
+            }
+    )
 
     /**
      * It gets an [UserModel] list from repository, this method should not
