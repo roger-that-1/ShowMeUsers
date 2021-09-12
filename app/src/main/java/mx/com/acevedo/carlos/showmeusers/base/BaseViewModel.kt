@@ -1,7 +1,7 @@
 package mx.com.acevedo.carlos.showmeusers.base
 
 import androidx.lifecycle.ViewModel
-import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.disposables.CompositeDisposable
 import mx.com.acevedo.carlos.showmeusers.utils.SingleLiveEvent
 import mx.com.acevedo.carlos.showmeusers.utils.toLiveData
 

@@ -2,6 +2,7 @@ package mx.com.acevedo.carlos.showmeusers.components.userlist.utils
 
 import androidx.annotation.StringRes
 import mx.com.acevedo.carlos.showmeusers.R
+import mx.com.acevedo.carlos.showmeusers.components.userlist.models.UserDbModel
 import mx.com.acevedo.carlos.showmeusers.components.userlist.models.UserModel
 import mx.com.acevedo.carlos.showmeusers.components.userlist.models.UserModelResponse
 import mx.com.acevedo.carlos.showmeusers.utils.ResourceProvider
@@ -70,4 +71,46 @@ class UserModelMapper @Inject constructor(
         field: String
     ): Pair<String, String> =
         Pair(resourceProvider.getString(title), field)
+
+    /**
+     * Maps [UserModel] list to [UserDbModel] list
+     * @param userDbModelList db user list
+     */
+    fun mapToUserModelList(userDbModelList: List<UserDbModel>) =
+        userDbModelList.map { userDbModel ->
+            userDbModel.run {
+                UserModel(
+                    name = name,
+                    nationality = nationality,
+                    profilePictureSmall = profilePictureSmall,
+                    profilePictureLarge = profilePictureLarge,
+                    postCode = postCode,
+                    streetName = streetName,
+                    streetNumber = streetNumber,
+                    city = city,
+                    state = state
+                )
+            }
+        }
+
+    /**
+     * Maps [UserDbModel] list to [UserModel] list
+     * @param userModelList user model list
+     */
+    fun mapToUserDbModelList(userModelList: List<UserModel>) =
+        userModelList.map { userModel ->
+            userModel.run {
+                UserDbModel(
+                    name = name,
+                    nationality = nationality,
+                    profilePictureSmall = profilePictureSmall,
+                    profilePictureLarge = profilePictureLarge,
+                    postCode = postCode,
+                    streetName = streetName,
+                    streetNumber = streetNumber,
+                    city = city,
+                    state = state
+                )
+            }
+        }
 }

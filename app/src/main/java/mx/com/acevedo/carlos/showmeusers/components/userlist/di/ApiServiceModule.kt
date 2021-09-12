@@ -10,10 +10,13 @@ import mx.com.acevedo.carlos.showmeusers.components.userlist.api.UserServiceRepo
 import mx.com.acevedo.carlos.showmeusers.components.userlist.api.UsersApiService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+/**
+ * Api service model, it provides [Retrofit] service instances
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 class ApiServiceModule {
@@ -23,20 +26,21 @@ class ApiServiceModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient() = OkHttpClient.Builder().build()
+    fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder().build()
 
     @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient, BASE_URL: String) = Retrofit.Builder()
+    fun provideRetrofit(okHttpClient: OkHttpClient, BASE_URL: String): Retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .baseUrl(BASE_URL)
         .client(okHttpClient)
         .build()
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit) = retrofit.create(UsersApiService::class.java)
+    fun provideApiService(retrofit: Retrofit): UsersApiService =
+        retrofit.create(UsersApiService::class.java)
 
     @Provides
     @Singleton
