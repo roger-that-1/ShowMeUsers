@@ -7,7 +7,7 @@ import mx.com.acevedo.carlos.showmeusers.utils.applySchedulers
 import javax.inject.Inject
 
 class UserServiceRepositoryImpl @Inject constructor(
-    private val userServiceHelper: UsersApiService,
+    private val userService: UsersApiService,
     private val userModelMapper: UserModelMapper
 ) : UserServiceRepository {
 
@@ -16,7 +16,7 @@ class UserServiceRepositoryImpl @Inject constructor(
      * finally mutable list is parsed to immutable list to prevent modifications at observer
      */
     override fun getUserModelList(): Single<List<UserModel>> {
-        return userServiceHelper.getUserModel()
+        return userService.getUserModel()
             .repeat(REPEAT_TIMES.toLong())
             .map { userModelMapper.map(it) }
             .toList()

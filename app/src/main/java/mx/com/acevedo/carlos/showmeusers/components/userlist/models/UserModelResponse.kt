@@ -12,7 +12,7 @@ data class UserModelResponse(
         @SerializedName("location")
         val location: Location?,
         @SerializedName("picture")
-        val profilePicture: ProfilePicture
+        val profilePicture: ProfilePicture?
     )
 
     data class Name(
@@ -46,8 +46,8 @@ data class UserModelResponse(
 
     data class ProfilePicture(
         @SerializedName("medium")
-        val pictureMedium: String,
+        val pictureMedium: String?,
         @SerializedName("large")
-        val pictureLarge: String
+        val pictureLarge: String?
     )
 }
