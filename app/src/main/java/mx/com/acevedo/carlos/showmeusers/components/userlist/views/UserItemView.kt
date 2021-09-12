@@ -7,10 +7,10 @@ import mx.com.acevedo.carlos.showmeusers.components.userlist.models.UserModel
 import mx.com.acevedo.carlos.showmeusers.databinding.UserItemViewBinding
 import mx.com.acevedo.carlos.showmeusers.utils.LoadImageUtil
 
-class UserItemView(private val userModel: UserModel) : BindableItem<UserItemViewBinding>() {
+class UserItemView(val userModel: UserModel) : BindableItem<UserItemViewBinding>() {
 
     /**
-     * Binds item view with model values
+     * Binds item view with [userModel] values
      */
     override fun bind(viewBinding: UserItemViewBinding, position: Int) {
         with(viewBinding) {
@@ -18,7 +18,7 @@ class UserItemView(private val userModel: UserModel) : BindableItem<UserItemView
             textViewUserNationality.text = userModel.nationality
 
             LoadImageUtil.loadImageFromUrl(
-                userModel.profilePicture,
+                userModel.profilePictureSmall,
                 imageViewUserPicture
             )
         }

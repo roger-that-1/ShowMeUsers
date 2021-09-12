@@ -1,5 +1,6 @@
 package mx.com.acevedo.carlos.showmeusers.components.userlist.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +28,13 @@ class UserListFragment : Fragment() {
 
     private val itemsAdapter by lazy {
         GroupAdapter<GroupieViewHolder>()
+    }
+
+    private var listener: UserListFragmentListener? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listener = context as? UserListFragmentListener
     }
 
     override fun onCreateView(
@@ -66,6 +74,13 @@ class UserListFragment : Fragment() {
     }
 
     /**
+     * Calls on user item click listener to delegate navigation to activity
+     */
+    private fun onUserItemViewClick(itemView: UserItemView) {
+        listener?.onUserItemClick(itemView.userModel)
+    }
+
+    /**
      * Setting up recycler view
      */
     private fun initRecyclerView() {
@@ -78,6 +93,18 @@ class UserListFragment : Fragment() {
             swipeRefreshUserList.setOnRefreshListener {
                 viewModel.updateUserList()
             }
+            itemsAdapter.setOnItemClickListener { item, _ ->
+                if (item is UserItemView) onUserItemViewClick(item)
+            }
         }
+    }
+
+    override fun onDetach() {
+        listener = null
+        super.onDetach()
+    }
+
+    interface UserListFragmentListener {
+        fun onUserItemClick(userModel: UserModel)
     }
 }

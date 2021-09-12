@@ -7,5 +7,21 @@
     <fragment
         android:id="@+id/userListFragment"
         android:name="mx.com.acevedo.carlos.showmeusers.components.userlist.fragments.UserListFragment"
-        android:label="UserListFragment" />
+        android:label="UserListFragment">
+        <action
+            android:id="@+id/action_to_userDetailFragment"
+            app:destination="@id/userDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/userDetailFragment"
+        android:name="mx.com.acevedo.carlos.showmeusers.components.userlist.fragments.UserDetailFragment"
+        android:label="UserDetailFragment">
+        <argument
+            android:name="userModel"
+            app:argType="mx.com.acevedo.carlos.showmeusers.components.userlist.models.UserModel" />
+    </fragment>
 </navigation>
