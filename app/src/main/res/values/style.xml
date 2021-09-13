@@ -22,6 +22,7 @@
     </style>
 
     <style name="CardView.CustomView" parent="Widget.MaterialComponents.CardView">
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
         <item name="android:background">@color/white</item>
         <item name="cardBackgroundColor">@color/orange_primary</item>
         <item name="cardCornerRadius">@dimen/cardView_corner_radius</item>
