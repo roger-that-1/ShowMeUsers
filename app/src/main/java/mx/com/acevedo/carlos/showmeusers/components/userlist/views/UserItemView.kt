@@ -1,6 +1,7 @@
 package mx.com.acevedo.carlos.showmeusers.components.userlist.views
 
 import android.view.View
+import android.view.animation.AnimationUtils
 import com.xwray.groupie.viewbinding.BindableItem
 import mx.com.acevedo.carlos.showmeusers.R
 import mx.com.acevedo.carlos.showmeusers.components.userlist.models.UserModel
@@ -20,6 +21,10 @@ class UserItemView(val userModel: UserModel) : BindableItem<UserItemViewBinding>
             LoadImageUtil.loadImageFromUrl(
                 userModel.profilePictureSmall,
                 imageViewUserPicture
+            )
+            root.animation = AnimationUtils.loadAnimation(
+                viewBinding.root.context,
+                R.anim.recycler_view_anim
             )
         }
     }
